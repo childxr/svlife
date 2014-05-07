@@ -1,0 +1,55 @@
+/*
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+The matching should cover the entire input string (not partial).
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa", "a*") → true
+isMatch("aa", ".*") → true
+isMatch("ab", ".*") → true
+isMatch("aab", "c*a*b") → true
+*/
+
+//这道题需要从简单到复杂的分析：
+//假设p为pattern, s为string，f(i,j)为 p(0--i)与s(0--j)match的结果，我们首先得比较p(i)字符与s(j)字符
+//最简单的情况：p(i)和s(j)都是字母字符，那么结果就是f(i,j) = f(i-1,j-1) 如果p(i) = s(j),否则就是F
+//然后考虑比较简单的情况，即p(i)为'.':因为'.'可以匹配任何字符，所以我们有f(i,j) = f(i-1,j-1)
+//如果当前p(i)为'*',那么f(i,j)对之前结果的继承，则要基于字符p(i-1)与字符s(j)的比较情况：
+//如果两个字符不相等，那么f(i,j)只能依赖于f(i-2,j)的结果，这种情况就是p = "ca*b", s="cb"
+//如果两个字符相等，那么f(i,j)可以从f(i-2,j)与f(i,j-1)中的其中一个继承结果
+//对于前一种情况，适用于p="ab*a*c*a", s="aaa"
+//对于后一种情况，f(i,j-1)，适用于p="a*", s="aa"
+//这道题需要注意的还有，动态表0列的初始化，如果当前p(i)为*，要继承f(i-2,0)的结果
+//而以上继承结果的前提是，不会出现以'*'开头的pattern, 如"*a"
+
+public boolean isMatch(String s, String p) {
+    int m = s.length() + 1;
+    int n = p.length() + 1;
+    boolean[][] result = new boolean[n][m];
+    
+    result[0][0] = true;               
+    for( int i = 1; i < n; i++){
+        result[i][0] = p.charAt(i-1) == '*' ? result[i-2][0] : false;
+    }
+
+    for( int i = 1; i < n; i++ ){
+        for( int j = 1; j < m; j++ ){
+            if(p.charAt(i-1) == '*')
+                result[i][j] = match(s.charAt(j-1),p.charAt(i-2)) ? (result[i][j-1]||result[i-2][j]) : result[i-2][j];
+            else
+                result[i][j] = match(s.charAt(j-1),p.charAt(i-1)) ? result[i-1][j-1] : false;
+        }
+    }
+    return result[n-1][m-1];
+}
+
+private boolean match(char a, char b){
+    if(a == '.' || b == '.')
+        return true;
+    else
+        return a == b;   
+}

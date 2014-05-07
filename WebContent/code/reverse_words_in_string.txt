@@ -1,0 +1,44 @@
+/*
+Given an input string, reverse the string word by word.
+For example,
+Given s = "the sky is blue",
+return "blue is sky the".
+Clarification:
+What constitutes a word?
+A sequence of non-space characters constitutes a word.
+Could the input string contain leading or trailing spaces?
+Yes. However, your reversed string should not contain leading or trailing spaces.
+How about multiple spaces between two words?
+Reduce them to a single space in the reversed string.
+*/
+
+//这道题的关键是如何判断单词的起点和终点
+//一个句子，如果从左往右扫描，单词的开头是扫描中遇到的第一个合法字符
+//而单词的结尾，是在单词开头找到之后，遇到的第一个空格字符的前一个字符
+//本题为处理特殊情况，将预设一个比原字符串长度大1的缓存
+//然后从右往左的将相应字符放入缓存的位置
+//返回前检查读入的字符串是否为空串，根据结果返回正确的值
+
+
+public String reverseWords(String s) {		
+	StringBuffer bf = new StringBuffer(s+"  "); 
+	int start = 0, end, i = 0, j = bf.length()-1; 
+	boolean foundStart = false;
+	while (i < s.length()) {
+		if (s.charAt(i) != ' ' && !foundStart) { 
+			start = i;
+			foundStart = true;
+		} else if (s.charAt(i) == ' ' && foundStart) {
+			end = i;
+			for (int k = end-1; k >= start; k--) bf.setCharAt(j--,s.charAt(k));
+			bf.setCharAt(j--, ' ');
+			foundStart = false;
+		}
+		i++;
+	}
+	if (foundStart) {
+		for (int k = i-1; k >= start; k--) bf.setCharAt(j--,s.charAt(k));
+		bf.setCharAt(j--, ' ');
+	} 
+	return j == bf.length()-1 ? "" : bf.substring(j+2); 
+}

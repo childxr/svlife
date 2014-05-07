@@ -1,0 +1,33 @@
+/*
+Given a string S and a string T, count the number of distinct subsequences of T in S.
+A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+Here is an example:
+S = "rabbbit", T = "rabbit"
+Return 3.
+*/
+
+//这道题的解题思路是：
+//假设我们已经知道子串S(0,i-1)和T（0，j-1)的结果f(i-1,j-1)，以及S(i-1)和T(j)的结果f(i-1,j)，我们想要知道结果f(i,j)，结果是啥
+//这时，我们就得比较S(i)和T(j)字符，如果
+//S(i) 和 T(j)相等，那么f(i,j) = f(i-1,j-1) + f(i-1,j), 即加上S(i)之后的结果与不加上S(i)后的结果的和数
+//如果两者不相等，那么结果就是f(i-1,j)
+//因为结果只依赖于i-1行，所以可以用一维数组搞定
+//要特别注意的是，tmp和prev的更新，需要写着if判断之外
+
+public int numDistinct(String S, String T) {
+    if (S == null && T == null || S.length() == 0 && T.length() == 0) return 1;
+    if (S == null || T == null || S.length() == 0) return 0;
+    int[] ret = new int[T.length()+1];
+    ret[0] = 1;
+    for (int i = 0; i < S.length(); i++) {
+        int prev = ret[0];
+        for (int j = 0; j < T.length(); j++) {
+            int tmp = ret[j+1];
+            if(S.charAt(i) == T.charAt(j)) {
+                ret[j+1] += prev;
+            }
+            prev = tmp;
+        }
+    }
+    return ret[T.length()];
+}

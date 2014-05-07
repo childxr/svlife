@@ -1,0 +1,26 @@
+/*
+Given a binary tree, determine if it is a valid binary search tree (BST).
+Assume a BST is defined as follows:
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+*/
+
+//这道题采用min-max方法
+//维护一个rule: min < root.val < max
+//初始化时，min = Integer.MIN_VALUE, max = Integer.MAX_VALUE
+//如果rule被violate了，即root.val >= max || root.val <= min,则知道这不是BST
+//否则，将递归向下的检查
+//对于left substree范围为(min, root.val)
+//对于right substree范围为(root.val, max)
+
+boolean validateBST(TreeNode root) {
+	return validateBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+}
+
+boolean validateBST(TreeNode root, int min, int max) {
+	if (root == null) return true;
+	if (root.val <= min || root.val >= max) return false;
+	return validateBST(root.left, min, root.val) 
+	&& validateBST(root.right, root.val, max);
+}

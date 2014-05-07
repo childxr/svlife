@@ -1,0 +1,48 @@
+/*
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1].
+*/
+
+//permutation的核心操作是置换
+//预排序是保证处理效率很关键的一步
+//有重复元素的情况下，保证只有一个self swap的结果被recursively passed down即可
+
+
+public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+    // Note: The Solution object is instantiated only once and is reused by each test case.
+    if (num == null || num.length ==0) return null;
+    ArrayList<ArrayList<Integer>> rs = new ArrayList<ArrayList<Integer>> ();
+    Arrays.sort(num);
+    ArrayList<Integer> array = new ArrayList<Integer>(num.length);
+    for (int i = 0; i < num.length; i++) array.add(num[i]);
+    permuteUnique(num, 0, array, rs);
+    return rs;
+}
+
+public void permuteUnique(int[] num, int start, ArrayList<Integer> array, ArrayList<ArrayList<Integer>> rs) {
+    if (start == num.length) {
+        rs.add((ArrayList<Integer>)array.clone());
+    } else {
+        for (int i = start; i < num.length; i++) {
+            if (noswap(array, start, i)) continue;
+            swap(array, start, i);
+            permuteUnique(num, start+1, array, rs);
+            swap(array, start, i);
+        }
+    }
+}
+
+private void swap(ArrayList<Integer> array, int i, int j) {
+    int tmp = array.get(i);
+    array.set(i, array.get(j));
+    array.set(j, tmp);
+}
+
+private boolean noswap(ArrayList<Integer> array, int start, int candidate) {
+    for (int k = start; k < candidate; k++) {
+        if (array.get(k) == array.get(candidate)) return true;
+    }
+    return false;
+}

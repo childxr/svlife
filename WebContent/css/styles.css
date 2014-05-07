@@ -1,0 +1,95 @@
+@CHARSET "UTF-8";
+
+.mytitle {
+	width: 1000px; 
+	height: 60px;
+}
+
+.outbox {
+	width: 1000px;
+	height: 60px;
+	pading: 0px;
+	margin: 0px;
+}
+
+.category {
+	font-style:italic;
+	font-size:18px;
+	color: #9999FF;
+	padding: 5px;
+	margin:0px;
+}
+
+.content {
+	margin: 5px;
+	padding: 5px;
+	color: #22242A;
+	font-size: 15px;
+	font-weight: 100;
+}
+
+.question {
+	font-size:15px;
+	color:#4F5361;
+	pading: 0px;
+	margin: 0px;
+}
+
+#qbanner {
+	background-color:#C4CDE9;
+}
+
+#abanner {
+	background-color:#E0E0FF;
+	text-align:center;
+}
+
+#nbanner {
+	background-color:#E3E5E5;
+}
+
+.time {
+	font-style:italic;
+	font-size:15px;
+	color: #9999FF;
+	padding: 5px;
+	margin:0px;
+}
+
+.tbtitle {
+	color:#00000A;
+	font-size: 15px;
+	padding: 2px;
+	margin: 0px;
+	font-weight: 120;
+}
+
+#cbanner {
+	background-color:#D3D3D0;
+	font-size: 15px;
+}
+
+#dtbanner {
+	bgcolor:#C4CDE9;
+}
+.ctitle {
+	color:#2E2E30;
+	margin:2px;
+	padding:2px;
+	font-size:24px;
+}
+.des {
+	font-size: 15px;
+	color: green;
+	font-weight: 100;
+	margin: 0px;
+	padding:2px;
+}
+
+.cques {
+	color: #474749;
+	margin: 2px;
+	padding:2px;
+	font-size: 18px;
+	font-weight: 100;
+}

@@ -1,0 +1,33 @@
+/*
+Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+You have the following 3 operations permitted on a word:
+a) Insert a character
+b) Delete a character
+c) Replace a character
+*/
+
+//这道题属于字符串中动态规划： 假设函数f(i,j)为将S1（0-i)转成S2(0-j)所需要用的最小步数，并且
+//one: 我们知道从S1(0-i-1)转成S2(0-j-1)所需要用的步数为f(i-1,j-1): 
+//S1 = abb, S2 = abc, i = 2, f(1,1)为ab -> ab的步数, 因为S1和S2都没有到2，所以替换2位置的字符
+//two: 同时知道从S1(0-i)转成S2(0-j-1)的步数为f(i, j-1):
+//S1 = abb, S2 = abc, i = 2, f(2,1)为abb -> ab的步数，因为S1字符尝试完毕，但是其对于目标字符还差1，所以需要用插入操作
+//three: 还知道从S1(0-i-1)转成S2)0-j)的步数为f(i-1,j):
+//S1 = abb, s2 = abc, i = 2, f(1,2)为ab -> abc的步数，因为S1已经转成目标字符，但是S1还有多余字符挂在后面，所以需用删除
+//根据S(i)和S(j)字符比较的结果，可以完成动态表格
+//如果S(i) = S(j)，那么有f(i,j) = f(i-1,j-1)
+//如果不相等，那么，f(i,j)则是上面3中情况中最小的一种+1
+
+public int minDistance(String word1, String word2) {
+    if (word1 == null || word2 == null) return 0;
+    int l1 = word1.length(), l2 = word2.length();
+    int[][] map = new int[l1+1][l2+1];
+    for (int i = 0; i < l1+1; i++) map[i][0] = i;
+    for (int j = 0; j < l2+1; j++) map[0][j] = j;
+    for (int i = 1; i < l1+1; i++) {
+        for (int j = 1; j < l2+1; j++) {
+            if(word1.charAt(i-1) == word2.charAt(j-1)) map[i][j] = map[i-1][j-1];
+            else map[i][j] = Math.min(Math.min(map[i-1][j], map[i][j-1]), map[i-1][j-1])+1;
+        }
+    }
+    return map[l1][l2];
+}

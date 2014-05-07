@@ -1,0 +1,31 @@
+/*
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+Write the code that will take a string and make this conversion given a number of rows:
+string convert(string text, int nRows);
+convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+*/
+
+//这道题的关键是通过二维数组来解决上下移动的问题
+//用一个变量row来标记当前行号
+//当row到达边缘行时，即（0|nRow-1)，移动的方向改变
+//最后通过二维数组重组结果返回
+
+public String convert(String s, int nRows) {
+    if (s == null || s.length() == 0 || nRows <= 1) return s;
+    boolean inorder = true; //top down
+    int row = 0;
+    StringBuffer[] bfs = new StringBuffer[nRows];
+    for (int i = 0; i < nRows; i++) bfs[i] = new StringBuffer();
+    for (int i = 0; i < s.length(); i++) {
+        bfs[row].append(s.charAt(i));
+        if (inorder) row++;
+        else row--;
+        if (row == 0 || row == nRows-1) inorder = !inorder;
+    }
+    for (int i = 1; i < nRows; i++) bfs[0].append(bfs[i].toString());
+    return bfs[0].toString();
+}

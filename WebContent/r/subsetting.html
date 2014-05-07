@@ -1,0 +1,119 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+	<head>
+		<title>HTML Online Editor Sample</title>
+	</head>
+	<body>
+		<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 1000px;">
+			<tbody>
+				<tr>
+					<td>
+						<h1>
+							Subsetting</h1>
+						<h2>
+							vector</h2>
+						<p>
+							vector可以用[]来制定想要的区域或想要的元素</p>
+						<p>
+							x&lt;-c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;)</p>
+						<p>
+							x[1]</p>
+						<p>
+							[1] a</p>
+						<p>
+							x[1:2]</p>
+						<p>
+							vector还可以用条件来subset</p>
+						<p>
+							x[x&gt;&quot;a&quot;]</p>
+						<p>
+							[1] &quot;b&quot; &quot;c&quot; &quot;d&quot;</p>
+						<p>
+							&nbsp;</p>
+						<p>
+							[1] &quot;a&quot; &quot;b&quot;</p>
+						<h2>
+							Matrix</h2>
+						<p>
+							可以通过行列来subset matrix。但是要注意，如果subset出来的vector长度为1，结果会自动变成vector类型，而不是matrix类型。</p>
+						<p>
+							x &lt;- matrix(1:6, 2,3)</p>
+						<p>
+							x[1,]</p>
+						<p>
+							[1] 1 3 5</p>
+						<p>
+							如果想要保留matrix类型，则要用到drop属性</p>
+						<p>
+							x[1,,drop=false]</p>
+						<p>
+							&nbsp; &nbsp; &nbsp; [1,][2,][3,]</p>
+						<p>
+							[,1] 1 &nbsp; &nbsp;3 &nbsp; &nbsp;5</p>
+						<h2>
+							List</h2>
+						<p>
+							List通常是用[]和[[]]来取得元素的。如果是要取连名带数据，用[],如果要单纯的把某位子的数据取出来，则用[[]]</p>
+						<p>
+							x &lt;- list(foo=1:4, bar=&quot;hello&quot;, baz=0.6)</p>
+						<p>
+							x[1]</p>
+						<p>
+							$foo</p>
+						<p>
+							[1]1 2 3 4</p>
+						<p>
+							x[[1]]</p>
+						<p>
+							[1]1 2 3 4</p>
+						<p>
+							也可以用名字取得list中的元素</p>
+						<p>
+							x$foo</p>
+						<p>
+							[1] 1 2 3 4</p>
+						<p>
+							名字还能用在[[]]或[]里</p>
+						<p>
+							x[&quot;foo&quot;]</p>
+						<p>
+							$foo</p>
+						<p>
+							[1]1 2 3 4</p>
+						<p>
+							x[[&quot;foo&quot;]]</p>
+						<p>
+							[1]1 2 3 4</p>
+						<p>
+							如果想取list中的某些元素，可以用c将他们的index连接起来</p>
+						<p>
+							x[c(1,3)]</p>
+						<p>
+							$foo</p>
+						<p>
+							[1]1 2 3 4</p>
+						<p>
+							$baz</p>
+						<p>
+							[1]0.6</p>
+						<p>
+							如果想要取得list中特定位置的元素值，则用[[]]</p>
+						<p>
+							x[[c(1,3)]]&nbsp;</p>
+						<p>
+							[1] 3</p>
+						<p>
+							x[[1]][[3]]</p>
+						<p>
+							[1]3</p>
+						<h2>
+							NA</h2>
+						<p>
+							如果x,y是两个长度相等的vector,可以通过complete.cases(x,y)来创建一个logical vector,用来标记在两个vector中都存在元素的位子。</p>
+						<p>
+							当然，complete.cases()还可以用data frame来作为参数:complete.cases(dataframex)</p>
+					</td>
+				</tr>
+			</tbody>
+		</table></body>
+</html>

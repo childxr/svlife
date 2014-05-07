@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+<session-factory>
+   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+   <!-- local -->
+   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/itv</property>
+   <property name="hibernate.connection.username">root</property>
+   <property name="hibernate.connection.password">silen</property>
+ 
+   <property name="hibernate.connection.pool_size">10</property>
+   <property name="show_sql">true</property>
+   <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+   <property name="hibernate.hbm2ddl.auto">update</property>
+   <property name="hibernate.connection.zeroDateTimeBehavior">convertToNull</property>
+
+   <mapping class="com.rxlab.pojo.Knowledge" />
+   <mapping class="com.rxlab.pojo.Category" />
+   <mapping class="com.rxlab.pojo.Quiz" />
+   <mapping class="com.rxlab.pojo.Code" />
+   <mapping class="com.rxlab.pojo.Exam" />
+   <mapping class="com.rxlab.pojo.CodeComment" />
+	<mapping class="com.rxlab.pojo.ExamTry" />
+</session-factory>
+</hibernate-configuration> 

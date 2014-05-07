@@ -1,0 +1,39 @@
+/*
+Given a binary tree, return the postorder traversal of its nodes' values.
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [3,2,1].
+Note: Recursive solution is trivial, could you do it iteratively?
+*/
+
+//Post order的原则是，先访问所有的子节点，其次才到根节点
+//根据这个顺序，我们可以设一个prev的标记
+//当前节点为栈顶节点，初始时候为根节点
+//当当前节点的左节点或者右节点被访问过了之后	，或者当前节点为叶子节点
+//则将当前节点从栈弹出，更新prev指针
+//否则，则将当前节点的右节点和左节点分别入栈
+
+public ArrayList<Integer> postorderTraversal(TreeNode root) {
+    ArrayList<Integer> ret = new ArrayList<Integer> ();
+    if (root == null) return ret;
+    Stack<TreeNode> st = new Stack<TreeNode> ();
+    TreeNode prev = null;
+    st.push(root);
+    while (!st.isEmpty()) {
+        TreeNode cur = st.peek();
+        if ((cur.left == null && cur.right == null) || (prev != null &&(cur.left == prev|| cur.right == prev))){
+            TreeNode t = st.pop();
+            ret.add(t.val);
+            prev = t;
+        } else {
+            if(cur.right != null) st.push(cur.right);
+            if (cur.left != null) st.push(cur.left);
+        }
+    }
+    return ret;
+}

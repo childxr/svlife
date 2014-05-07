@@ -1,0 +1,36 @@
+/*
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+The replacement must be in-place, do not allocate extra memory.
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+*/
+
+//题意寻找比当前排列顺序大的下一个排列。
+//因为降序序列是没法变的更大的，所以从后往前找到第一个升序对的位置。
+//然后就存在调整大小排列顺序的可能，从后往前找到比当前位置大的元素，交换之。
+//当前位置后面的元素还是降序排列，将他们反转得到最小顺序排列。其实就是原来当前位置元素后面是最大的排列，而交换后的新元素之后是最小的排列，他们就是相邻的顺序。
+//当不存在升序，则当前排列是最大排列，只要旋转整个序列变成最小排列。
+
+public void nextPermutation(int[] num) {
+    int lastAsc = -1;
+    for (int i = 0; i < num.length-1; i++) 
+        if (num[i] < num[i+1]) lastAsc = i;
+    if (lastAsc > -1) {
+        int mstRLarger = 0;
+        for (int i = 0; i < num.length; i++)
+            if (num[i] > num[lastAsc]) mstRLarger = i;
+        swap(num,lastAsc,mstRLarger);
+    }
+    reverse(num, lastAsc+1, num.length-1);
+}
+private void swap(int[] num, int i, int j) {
+    num[i] = num[i]^num[j];
+    num[j] = num[i]^num[j];
+    num[i] = num[i]^num[j];
+}
+private void reverse(int[] num, int start, int end) {
+    while (start < end) {swap(num, start++,end--);}
+}

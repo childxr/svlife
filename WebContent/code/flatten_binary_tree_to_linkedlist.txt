@@ -1,0 +1,45 @@
+/*
+Given a binary tree, flatten it to a linked list in-place.
+For example,
+Given
+         1
+        / \
+       2   5
+      / \   \
+     3   4   6
+The flattened tree should look like:
+   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+*/
+
+//这道题是后序遍历的变形
+//先整理左节点，使得其成为linkedlist
+//然后整理右节点，使得其成为linkedlist
+//最后将左节点尾部连接右节点
+//返回右节点尾部
+
+public void flatten(TreeNode root) {
+    if (root == null) return;
+    flattenTree(root);
+}
+private TreeNode flattenTree(TreeNode root) {
+    if (root == null) return null;
+    TreeNode leftTail = flattenTree(root.left);
+    if (leftTail == null) leftTail = root;
+    TreeNode rightTail = flattenTree(root.right);
+    if (rightTail == null) rightTail = leftTail;
+    TreeNode tmp = root.right;
+    root.right = root.left;
+    leftTail.right = tmp;
+    root.left = null;
+    return rightTail;
+}

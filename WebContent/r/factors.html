@@ -1,0 +1,48 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+	<head>
+		<title>HTML Online Editor Sample</title>
+	</head>
+	<body>
+		<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 1000px;">
+			<tbody>
+				<tr>
+					<td>
+						<h1>
+							Factors</h1>
+						<h2>
+							Introduction</h2>
+						Factor是用来表示categorical数据的。它可以是有序或者无序的。在modelling的函数里，如lm()和glm()，factor会特别对待。用factor做标记会比用integer标记好，因为它更具有说明性。<br />
+						<h2>
+							Constructor</h2>
+						<p>
+							可以用factor() command来构造factor的向量。</p>
+						单个参数
+						<ul>
+							<li>
+								x &lt;- factor(c(&quot;yes&quot;,&quot;yes&quot;,&quot;no&quot;,&quot;yes&quot;,&quot;no&quot;))</li>
+							<li>
+								x</li>
+							<li>
+								[1] yes yes no &nbsp;yes no&nbsp;</li>
+							<li>
+								Levels: no yes</li>
+						</ul>
+						两个参数（控制level输出的顺序）<br />
+						<div>
+							<ul>
+								<li>
+									x &lt;- factor(c(&quot;yes&quot;,&quot;yes&quot;,&quot;no&quot;,&quot;yes&quot;,&quot;no&quot;), levels=c(&quot;yes&quot;,&quot;no&quot;))</li>
+								<li>
+									x</li>
+								<li>
+									[1] yes yes no &nbsp;yes no&nbsp;</li>
+								<li>
+									Levels: yes no</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table></body>
+</html>

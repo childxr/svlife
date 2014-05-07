@@ -1,0 +1,49 @@
+/*
+Given a string s, partition s such that every substring of the partition is a palindrome.
+Return all possible palindrome partitioning of s.
+For example, given s = "aab",
+Return
+  [
+    ["aa","b"],
+    ["a","a","b"]
+  ]
+*/
+
+//这道题的解题思路是递归的组装palindrome，在每个可能切分的位置试着切分
+//如果切分到最后一个字符，那么这一次尝试则是成功的
+
+public ArrayList<ArrayList<String>> partition(String s) {
+    ArrayList<ArrayList<String>> ret = new ArrayList<ArrayList<String>> ();
+    if (s == null || s.length() == 0) return ret;
+    boolean[][] tb = getPalindromeTB(s);
+    getPartition(s, 0, ret, tb, new ArrayList<String> ());
+    return ret;
+}
+
+private void getPartition(String s, int start, ArrayList<ArrayList<String>> ret, boolean[][] tb, ArrayList<String> bf) {
+    if (start == s.length()) {
+        ret.add(new ArrayList<String> (bf));
+    } else {
+        for (int i = start; i < s.length(); i++) {
+            if(tb[start][i]) {
+                String word = s.substring(start, i+1);
+                bf.add(word);
+                getPartition(s, i+1, ret, tb, bf);
+                bf.remove(bf.size()-1);
+            }
+        }
+    }
+}
+
+private boolean[][] getPalindromeTB(String s) {
+    boolean[][] tb = new boolean[s.length()][s.length()];
+    for (int i = 0; i < s.length(); i++) tb[i][i] = true;
+    for (int i = 0; i < s.length()-1; i++) if (s.charAt(i) == s.charAt(i+1)) tb[i][i+1] = true;
+    for (int len = 3; len <= s.length(); len++) {
+        for (int i = 0; i < s.length() - len + 1; i++) {
+            int j = i + len - 1;
+            if (s.charAt(i) == s.charAt(j) && tb[i+1][j-1]) tb[i][j] = true;
+        }
+    }
+    return tb;
+}

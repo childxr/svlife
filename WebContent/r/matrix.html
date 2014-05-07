@@ -1,0 +1,73 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+	<head>
+		<title>HTML Online Editor Sample</title>
+	</head>
+	<body>
+		<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 1000px;">
+			<tbody>
+				<tr>
+					<td>
+						<h1>
+							Matrix</h1>
+						Matrix是向量加上dimension attribute<br />
+						可以通过matrix () 建立维度已知的matrix<br />
+						<div>
+							&nbsp; &nbsp;m &lt;- matrix(1:6, nrow=2, ncol=3)</div>
+						<div>
+							&nbsp; &nbsp;m</div>
+						<div>
+							&nbsp; &nbsp; &nbsp; &nbsp;[,1] [,2] [,3]</div>
+						<div>
+							&nbsp; [1,] &nbsp; &nbsp;1 &nbsp; &nbsp;3 &nbsp; &nbsp;5</div>
+						<div>
+							&nbsp; [2,] &nbsp; &nbsp;2 &nbsp; &nbsp;4 &nbsp; &nbsp;6</div>
+						<div>
+							&nbsp;</div>
+						<div>
+							可以通过对vector加入dim来使vector变成matrix</div>
+						<div>
+							<div>
+								&nbsp; &nbsp;m &lt;- 1:10</div>
+							<div>
+								&nbsp; &nbsp;m</div>
+							<div>
+								&nbsp; &nbsp;[1] &nbsp;1 &nbsp;2 &nbsp;3 &nbsp;4 &nbsp;5 &nbsp;6 &nbsp;7 &nbsp;8 &nbsp;9 10</div>
+							<div>
+								&nbsp; &nbsp;dim(m) &lt;- c(2,5)</div>
+							<div>
+								&nbsp; &nbsp;m</div>
+							<div>
+								&nbsp; &nbsp; &nbsp; &nbsp;[,1] [,2] [,3] [,4] [,5]</div>
+							<div>
+								&nbsp; [1,] &nbsp; &nbsp;1 &nbsp; &nbsp;3 &nbsp; &nbsp;5 &nbsp; &nbsp;7 &nbsp; &nbsp;9</div>
+							<div>
+								&nbsp; [2,] &nbsp; &nbsp;2 &nbsp; &nbsp;4 &nbsp; &nbsp;6 &nbsp; &nbsp;8 &nbsp; 10</div>
+							<div>
+								&nbsp;</div>
+							<div>
+								可以通过cbind() 和rbind()将类型相同，且长度相同的vector结合起来成为一个matrix</div>
+						</div>
+						<div>
+							&nbsp; x &lt;- 1:3</div>
+						<div>
+							&nbsp; y &lt;- 10:12</div>
+						<div>
+							&nbsp; m &lt;- cbind(x,y)</div>
+						<div>
+							&nbsp; class(m)</div>
+						<div>
+							&nbsp; [1] &quot;matrix&quot;</div>
+						<div>
+							&nbsp; m &lt;- rbind(x,y)</div>
+						<div>
+							&nbsp; class(m)</div>
+						<div>
+							&nbsp; [1] &quot;matrix&quot;</div>
+						<div>
+							&nbsp;</div>
+					</td>
+				</tr>
+			</tbody>
+		</table></body>
+</html>

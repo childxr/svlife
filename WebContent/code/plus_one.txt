@@ -1,0 +1,25 @@
+/*
+Given a non-negative number represented as an array of digits, plus one to the number.
+The digits are stored such that the most significant digit is at the head of the list.
+*/
+
+//这道题也是merge sort的变形
+//个人觉得elegant的地方在于没有用到collection里的数据结构
+//全部基于primitive type的操作
+//和C++不一样，primitive type的数组的子集不能通过指针返回
+//而需要用Arrays.copyOfRange(array, from, toExclusive)这个API来实现
+
+public int[] plusOne(int[] digits) {
+    if (digits == null) return digits;
+	int[] rs = {1};
+    if (digits.length == 0) return rs;
+    rs = new int[digits.length+1];
+    int i = digits.length - 1, k = rs.length - 1;
+    int sum = 0, c = 1;
+    while (i >= 0 || c > 0) {
+        sum = i >= 0 ? digits[i--]+c:c;
+        rs[k--] = sum%10;
+        c = sum/10;
+    }
+    return (rs[0] == 0)?Arrays.copyOfRange(rs,1, rs.length):rs;
+}

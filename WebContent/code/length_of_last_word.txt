@@ -1,0 +1,29 @@
+/*
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+If the last word does not exist, return 0.
+Note: A word is defined as a character sequence consists of non-space characters only.
+For example, 
+Given s = "Hello World",
+return 5.
+*/
+
+//这道题的解题思路很直观：从后往前扫描，先找起始的位置，然后找终止的位置
+//起始位置的条件是：第一个出现的有效字符
+//终止位置的条件是：找到起始位置后，第一个出现的无效字符，或者-1，即0位置的字符也属于最后一个word
+//要注意在这道题中，判断一个字符是不是有效，必须检查字母的大小写
+
+public int lengthOfLastWord(String s) {
+    if (s == null || s.length() == 0) return 0;
+    int sum = 0; 
+    boolean foundStart = false;
+    for (int i = s.length()-1; i >= 0; i--) {
+        if (isCh(s.charAt(i)) && !foundStart) {foundStart = true; sum = 1;}
+        else if (isCh(s.charAt(i)) && foundStart) sum++;
+        else if (!isCh(s.charAt(i)) && foundStart) break;
+    }
+    return sum;
+}
+private boolean isCh(char c) {
+    if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') return true;
+    else return false;
+}

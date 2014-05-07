@@ -1,0 +1,35 @@
+/*
+Sort a linked list using insertion sort.
+*/
+
+//这道题难点是加上附加条件：只允许在一个链表上操作
+//这时候，我们需要考虑指针的个数：记录前一个节点prev,记录当前节点cur
+//方便操作的dummy节点
+//插入时，我们需要把cur节点与[head-prev]区间内节点进行比较
+//需要一个在此区间跑的runner
+//交换指针时，需要用的一个tmp节点
+//因此加上dummy,需要有5个指针存在
+
+public ListNode insertionSortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode prev = head, cur = head.next, runner;
+    boolean inserted = false;
+    while (cur != null) {
+        for (runner = dummy; runner.next != cur; runner = runner.next) {
+            if (runner.next.val > cur.val) {
+                ListNode tmp = runner.next;
+                runner.next = cur;
+                prev.next = cur.next;
+                cur.next = tmp;
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) prev = prev.next;
+        cur = prev.next;
+        inserted = false;
+    }
+    return dummy.next;
+}

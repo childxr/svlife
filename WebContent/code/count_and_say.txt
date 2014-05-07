@@ -1,0 +1,37 @@
+/*
+The count-and-say sequence is the sequence of integers beginning as follows:
+1, 11, 21, 1211, 111221, ...
+1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+Given an integer n, generate the nth sequence.
+Note: The sequence of integers will be represented as a string.
+*/
+
+//这道题也算是比较直观：对于给出的N进行n次迭代
+//每一次迭代，对当前字符串从左到右进行字符与频率统计
+//遇到不同的字符时，将前一个字符的统计结果存入缓存中
+//当前字符串遍历完毕之后，将最后一个字符的统计结果存入缓存中
+//最后更新当前字符串为缓存中的字符串，进入下一次迭代
+
+public String countAndSay(int n) {
+    if (n < 1) return "";
+    String str = "1";
+    for (int j = 2; j <= n; j++) {
+        StringBuffer bf = new StringBuffer();
+        char prev = str.charAt(0);
+        int count = 1;
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) != prev) {
+                bf.append(count).append(prev);
+                count = 1;
+                prev = str.charAt(i);
+            } else {
+                count++;
+            }
+        }
+        bf.append(count).append(prev);
+        str = bf.toString();
+    }
+    return str;
+}

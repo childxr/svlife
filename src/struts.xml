@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<package name="interview" extends="struts-default">
+		<action name="allKnowledge" method="execute" class="com.rxlab.action.interview.ListKnowledgeQuestionAction">
+			<result name="success">success.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addQuiz" method="execute" class="com.rxlab.action.interview.AddQuizAction" >
+			<result name="success">quiz_summary.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addcodecomment" method="execute" class="com.rxlab.action.interview.AddCodeCommentAction" >
+			<result name="success">code_comment.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addcode" method="execute" class="com.rxlab.action.interview.AddCodeAction" >
+			<result name="success" type="redirectAction">
+				<param name="actionName">code</param>
+				<param name="info">true</param>
+			</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="newknowledge" method="execute" class="com.rxlab.action.interview.AddKnowledgeAction" >
+			<result name="success" type="redirectAction">
+				<param name="actionName">review</param>
+				<param name="info">true</param>
+			</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addexam" method="execute" class="com.rxlab.action.interview.AddExamAction" >
+			<result name="success" type="redirectAction">
+				<param name="actionName">exam</param>
+				<param name="info">true</param>
+			</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addexamtry" method="execute" class="com.rxlab.action.interview.AddExamTryAction" >
+			<result name="success">success.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+	</package>
+	<package name="page" extends="struts-default">
+		<action name="review" method="execute" class="com.rxlab.action.page.ShowReviewPageAction">
+			<result name="success">review.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="knowledge" method="execute" class="com.rxlab.action.page.ShowKnowledgePageAction">
+			<result name="success">knowledge.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="addknowledge" method="execute" class="com.rxlab.action.page.ShowAddKnowledgePageAction">
+			<result name="success">knowledge_add.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="quiz" method="execute" class="com.rxlab.action.page.ShowQuizPageAction">
+			<result name="success">quiz.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="quizhistory" method="execute" class="com.rxlab.action.page.ShowQuizHistoryPageAction">
+			<result name="success">quiz_history.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="code" method="execute" class="com.rxlab.action.page.ShowCodeListPageAction">
+			<result name="success">code.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="allcode" method="execute" class="com.rxlab.action.page.ShowAllCodePageAction">
+			<result name="success">code_list.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="codedetails" method="execute" class="com.rxlab.action.page.ShowCodeDetailsPageAction">
+			<result name="success">code_details.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="codecomment" method="execute" class="com.rxlab.action.page.ShowCodeCommentPageAction">
+			<result name="success">code_comment.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="codecommenthistory" method="execute" class="com.rxlab.action.page.ShowCodeCommentHistoryPageAction">
+			<result name="success">code_comment_history.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="codedetailadd" method="execute" class="com.rxlab.action.page.ShowAddCodeDetailsPageAction">
+			<result name="success">code_detail_add.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="exam" method="execute" class="com.rxlab.action.page.ShowExamPageAction">
+			<result name="success">exam.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="examadd" method="execute" class="com.rxlab.action.page.ShowAddExamPageAction">
+			<result name="success">exam_add.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="examtry" method="execute" class="com.rxlab.action.page.ShowExamTryPageAction">
+			<result name="success">exam_try.jsp</result>
+			<result name="end">exam_end.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		<action name="examtrysummary" method="execute" class="com.rxlab.action.page.ShowExamTrySummaryPageAction">
+			<result name="success">exam_summary.jsp</result>
+			<result name="input">error.jsp</result>
+		</action>
+		
+	</package>
+</struts>

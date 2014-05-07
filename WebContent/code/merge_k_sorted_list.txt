@@ -1,0 +1,35 @@
+/*
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+*/
+
+//这道题跟parallel computing的思想很像
+//将总数组分成两部分a和b，如过list的个数为奇数，那么a = (list.size+1)/2 b = list.size/2
+//否则，a = b = list.size/2
+//将a和b对应位置的list合并，并将结果存入a
+//update list的size，继续以上的步骤
+//可以观察到，不管lists的总数是奇数还是偶数，a的个数都可以用(list.size+1)/2表示，这是block的大小
+//对a,b对应数组merge完毕之后，lists的总大小就会减少b的size的个数，因为b并到a中去了
+
+public ListNode mergeKLists(ArrayList<ListNode> lists) {
+    if (lists == null || lists.size() == 0) return null;
+    int size = lists.size();
+    int iter = size/2;
+    while (true) {
+        if (iter == 0) break; 
+        for (int i = 0, block = (size+1)/2; i < iter; i++) {
+            ListNode head = new ListNode(0), runner = head;
+            ListNode a = lists.get(i), b = lists.get(i+block);
+            while (a != null || b != null) {
+                if ((a != null && b != null && (a.val < b.val))|| b == null) {
+                    runner.next = a; a = a.next;
+                }
+                else {runner.next = b; b = b.next;}
+                runner = runner.next;
+            }
+            lists.set(i, head.next);
+        }
+        size -= iter;
+        iter = size/2;
+    }
+    return lists.get(0);
+}

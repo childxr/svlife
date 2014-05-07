@@ -1,0 +1,40 @@
+/*
+Two elements of a binary search tree (BST) are swapped by mistake.
+Recover the tree without changing its structure.
+Note:
+A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+*/
+
+//分析时考虑完全二叉树1235678
+//交换1和2的位置，变成2135678->无序数列21
+//交换2和5的位置，变成1532678->无序数列为532
+//交换1和7的位置，变成7235618->无序数列为723561
+//由上可以观察到，需要交换的两个数，一定是无序数列的第一个和最后一个位置的数
+//因此，在中序遍历过程中，我们需要保存至多2个节点
+//一个是第一个violate BST rule的第一个节点
+//一个是最后一个violate BST rule的节点
+//在找到第一个节点后，不停的update后一个节点
+//当遍历完毕后，后一个节点必定是需要与第一个节点交换的点
+
+
+void recoverBST(TreeNode root) {
+	TreeNode[] prev = new TreeNode[1];
+	TreeNode[] unorder = new TreeNode[2];
+	recoverBST(root, prev, unorder);
+	int tmp = unorder[0].val;
+	unorder[0].val = unorder[1].val;
+	unorder[1].val = tmp;
+}
+
+void recoverBST(TreeNode root, TreeNode[] prev, TreeNode[] unorder) {
+	if (root == null) return;
+	recoverBST(root.left, prev, unorder);
+	if (prev[0] != null) {
+		if (root.val < prev[0].val) {
+		  	if (unorder[0] == null) unorder[0] = prev[0];
+		   	unorder[1] = root;
+	    }
+    } 
+	prev[0] = root;
+	recoverBST(root.right, prev, unorder);
+}

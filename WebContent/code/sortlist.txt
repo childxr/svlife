@@ -1,0 +1,34 @@
+/*
+Sort a linked list in O(n log n) time using constant space complexity.
+*/
+
+//这道题主要是将原链表拆成两部分
+//然后分别对这两部分进行sorting
+//最后再将两部分链表merge后返回
+//写成递归比较不容易出错
+
+public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    int len = 0;
+    ListNode runner = null;
+    for (runner = head; runner != null; runner = runner.next) len++;
+    runner = head;
+    for (int i = 0; i < len/2-1;i++) runner = runner.next;
+    ListNode p = head, q = runner.next;
+    runner.next = null;
+    p = sortList(p);
+    q = sortList(q);
+    ListNode dummy = new ListNode(0);
+    runner = dummy;
+    while (p!= null || q!= null) {
+        if (p == null || (q!=null)&&(p.val > q.val)) {
+            runner.next = q;
+            q = q.next;
+        } else {
+            runner.next = p;
+            p = p.next;
+        }
+        runner = runner.next;
+    }
+    return dummy.next;
+}

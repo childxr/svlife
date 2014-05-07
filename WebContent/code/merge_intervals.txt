@@ -1,0 +1,36 @@
+/*
+Given a collection of intervals, merge all overlapping intervals.
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+*/
+
+//这道题关键是判断两个interval是不是overlap的
+//如果两个interval根据start的位置排序了，那么如果b.start <= a.end
+//就可以知道这两个interval是重合的，需要merge
+//这里用了Comparator这个接口，重写了compare方法来解决排序问题
+
+public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+    ArrayList<Interval> rs = new ArrayList<Interval>();
+    Collections.sort(intervals, new IntervalComparator());
+    for(int i = 0; i < intervals.size(); i++) {
+        Interval cur = intervals.get(i);
+        if (rs.size() == 0 || !overlap(rs.get(rs.size()-1), cur)) rs.add(cur);
+        else {
+            Interval last = rs.get(rs.size()-1);
+            last.start = Math.min(last.start, cur.start);
+            last.end = Math.max(last.end, cur.end);
+        }
+    }
+    return rs;
+}
+private boolean overlap(Interval a, Interval b) {
+    Interval smaller = a.start > b.start ? b : a;
+    Interval greater = a.start > b.start ? a : b;
+    return greater.start > smaller.end? false : true;
+}
+private class IntervalComparator implements Comparator<Interval> {
+    public int compare(Interval a, Interval b) {
+        return a.start - b.start;
+    }
+}

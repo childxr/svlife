@@ -1,0 +1,34 @@
+/*
+Given a binary tree, find the maximum path sum.
+The path may start and end at any node in the tree.
+For example:
+Given the below binary tree,
+
+       1
+      / \
+     2   3
+Return 6.
+*/
+
+//这道题是后续遍历的变形：从下往上计算路径的值
+//如果root为空，则返回0
+//否则算出左右节点的路径长度
+//根据左右节点的路径长度大小，算出当前路径长度（非负子路径加上当前节点值）
+//算出通过本节点的全路径，并update全局最长路径的值
+
+public int maxPathSum(TreeNode root) {
+    if (root == null) return 0;
+    int[] max = {root.val};
+    maxPathSum(root, max);
+    return max[0];
+}
+public int maxPathSum(TreeNode root, int[] max) {
+    if (root == null) return 0;
+    int left = maxPathSum(root.left, max);
+    int right = maxPathSum(root.right, max);
+    int cur = Math.max(left, right);
+    cur = cur > 0 ? cur+root.val : root.val;
+    int localmax = Math.max(cur, left+right+root.val);
+    max[0] = max[0] > localmax? max[0] : localmax;
+    return cur;
+}

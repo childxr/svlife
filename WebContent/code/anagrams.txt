@@ -1,0 +1,33 @@
+/*
+Given an array of strings, return all groups of strings that are anagrams.
+Note: All inputs will be in lower-case.
+*/
+
+//这道题用hash table来记录字符串信息
+//如果两个字符是anagram,他们的字符频率是一样的
+//将所有字符频率一样的字符串group在一起
+//返回group size > 1的group
+public ArrayList<String> anagrams(String[] strs) {
+    if (strs == null || strs.length == 0) return new ArrayList<String> ();
+    HashMap<HashMap<Character, Integer>,ArrayList<String>> map = new HashMap<HashMap<Character, Integer>, ArrayList<String>> ();
+    for (String str: strs) {
+        HashMap<Character, Integer> m = new HashMap<Character, Integer> ();
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (m.containsKey(ch)) m.put(ch, m.get(ch)+1);
+            else m.put(ch, 1);
+        }
+        if (map.containsKey(m)) {
+            map.get(m).add(str);
+        } else {
+            ArrayList<String> tmp = new ArrayList<String> ();
+            tmp.add(str);
+            map.put(m, tmp);
+        }
+    }
+    ArrayList<String> ret = new ArrayList<String> ();
+    for (ArrayList<String> rs: map.values()) {
+        if (rs.size() > 1) ret.addAll(rs);
+    }
+    return ret;
+}

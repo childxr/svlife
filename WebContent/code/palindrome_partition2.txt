@@ -1,0 +1,39 @@
+/* 
+  Given a string s, partition s such that every substring of the partition is a palindrome
+	Return the minimum cuts needed for a palindrome partitioning of s.
+	For example, given s = "aab",
+	Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut. 
+*/
+
+//  这道题的解题思路是： 
+//  我们知道一个字符串"aab"中，最差情况下，需要切两次，才能使得aab变成回文数组 [a,a,b]
+//  如果我们可以找到一个分割j,使得第j个字母到最后一个字母b是回文，那么"aab"的切分数可以更新为从a到第j-1个字母组成的字串的最小切分数加上1的值v,如果v小于aab原来的切分数
+//  用一个一维数组来ret来存0-i子串需要的最小切分数，初始化为i-1
+//  为了处理特殊情况如"a", "aa", "aab"，我们需要将ret数组的初始大小设置为字符串长度+1
+//  这是因为在这些特殊情况里，存在着空前串，即j=0。也就是说，这个切分的前串是空，ret[j-1]是不能直接用来更新当前子串的最小切分次数的。
+//  通过多开辟一个空间，将ret[j-1]的值初始为-1，这样便可以有效的防止invalid的数组更新操作了
+
+public int minCut(String s) {
+    if (s == null || s.length() == 0) return 0;
+    int[] ret = new int[s.length()+1];
+    for (int i = 0; i < s.length()+1; i++) ret[i] = i-1;
+    boolean[][] isPalindrome = getPalindromeST(s);
+    for (int i = 0; i < s.length(); i++) {
+        for (int j = 0; j <= i; j++) {
+            if(isPalindrome[j][i]) ret[i+1] = Math.min(ret[i+1], ret[j]+1);
+        }
+    }
+    return ret[s.length()];
+}
+private boolean[][] getPalindromeST (String s) {
+    boolean[][] tb = new boolean[s.length()][s.length()];
+    for (int i = 0; i < s.length(); i++) tb[i][i] = true;
+    for (int i = 0; i < s.length()-1; i++) if (s.charAt(i) == s.charAt(i+1)) tb[i][i+1] = true;
+    for (int len = 3; len <= s.length(); len++) {
+        for (int i = 0; i < s.length() - len+1; i++) {
+            int j = i+len-1;
+            if (s.charAt(i) == s.charAt(j) && tb[i+1][j-1]) tb[i][j] = true;
+        }
+    }
+    return tb;
+}

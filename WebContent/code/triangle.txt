@@ -1,0 +1,36 @@
+/*
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+For example, given the following triangle
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+Note:
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+*/
+
+//金字塔最短路径：考虑到寻找路上的点都是连续的
+//所以不管从上往下或从下往上，路径延伸的源方向最多是两个
+//从这两个源方向挑一个短的路径来继续延伸
+//因为这题要求全局最小，所以最佳的方法是从下往上走，延伸的源方向则是正下方和正下方右侧
+//当走到金字塔顶点时，最短路径长度便得出
+
+public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+    if (triangle == null || triangle.size() == 0) return 0;
+    int row = triangle.size();
+    int col = triangle.get(row-1).size();
+    int[] ret = new int[col];
+    for (int i = row - 1; i >= 0; i--) {
+        for (int j = 0; j <=i; j++) {
+            if (i == row - 1) {
+                ret[j] = triangle.get(i).get(j);
+            } else {
+                ret[j] = triangle.get(i).get(j) + Math.min(ret[j], ret[j+1]);
+            }
+        }
+    }
+    return ret[0];
+}

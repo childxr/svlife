@@ -1,0 +1,31 @@
+/*
+Given a string S, find the longest palindromic substring in S. 
+You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+*/
+
+//这道题是很多palindrome类型的基础，即构造palindrome表
+//假设map[i][j]是s(i..j)是否是palindrome的结果
+//思路是：将长度为1的palindrome找出来，记录在表中->map[i][i] = T
+//然后将长度为2的palindrome记录下来->map[i][i+1] = T，如果对应字符相等
+//最后，根据palindrome的性质，s(i) = s(j) && map[i+1][j-1]，我们可以知道map[i][j]也是palindrom
+
+public String longestPalindrome(String s) {
+    if (s == null || s.length() == 0) return s;
+    boolean[][] map = new boolean[s.length()][s.length()];
+    int st = 0, ed = 0;
+    for (int i = 0; i < s.length(); i++) map[i][i] = true;
+    for (int i = 0; i < s.length()-1; i++) {
+        if (s.charAt(i) == s.charAt(i+1)) {map[i][i+1] = true; st = i; ed = i+1;}
+    }
+    for (int len = 3; len < s.length()+1; len++) {
+        for (int i = 0; i < s.length() - len + 1; i++) {
+            int j = i + len - 1;
+            if (s.charAt(i) == s.charAt(j) && map[i+1][j-1]) {
+                map[i][j] = true;
+                st = i; 
+                ed = j;
+            }
+        }
+    }
+    return s.substring(st, ed+1);
+}

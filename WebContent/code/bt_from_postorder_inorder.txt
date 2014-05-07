@@ -1,0 +1,29 @@
+/*
+Given inorder and postorder traversal of a tree, construct the binary tree.
+Note:
+You may assume that duplicates do not exist in the tree.
+*/
+
+//这道题的思路是：访问postorder的元素，建立根节点
+//然后找到该元素在inorder中的位置
+//该位置把inorder分成两半，左边的为该元素左子树的节点
+//右边的为该元素的右节点
+//然后继续以上步骤，递归的建树
+//因为是postorder，所以建子树时要先建右子树，再到左子树
+
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+    if (postorder == null || inorder == null || postorder.length == 0 || inorder.length == 0 || postorder.length != inorder.length) return null;
+	HashMap<Integer, Integer> map = new HashMap<Integer, Integer> ();
+	for (int i = 0; i < inorder.length; i++) map.put(inorder[i], i);
+	int[] index = {postorder.length};
+	return buildTree(postorder, inorder, map, index, 0, postorder.length-1);
+}
+private TreeNode buildTree(int[] postorder, int[] inorder, HashMap<Integer, Integer> map, int[] index, int low, int high) {
+    if (low > high) return null;
+    index[0] -= 1;
+    TreeNode root = new TreeNode(postorder[index[0]]);
+    int in = map.get(postorder[index[0]]);
+    root.right = buildTree(postorder, inorder, map, index, in+1, high);
+    root.left = buildTree(postorder, inorder, map, index, low, in-1);
+    return root;
+}

@@ -1,0 +1,34 @@
+/*
+A message containing letters from A-Z is being encoded to numbers using the following mapping:
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given an encoded message containing digits, determine the total number of ways to decode it.
+For example,
+Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+The number of ways decoding "12" is 2.
+*/
+
+//这道题的解题思路是：考虑0的解法，再考虑可能有两种解码的情况
+//如果当前的字符是0，那么它前面的字符必须是1或者2，不然的话，解码方式为0
+//如果当前的字符是1-9并且前面的字符存在且为1，解码方式有两种，即f(n-1)+f(n-2)
+//其它情况，解码方式和到前一个字符为止的解码方式一样，即f(n-1)
+//这种情况很像斐波那契数，所以用三个变量即可
+//特别注意，写条件的时候要double check!
+
+public int numDecodings(String s) {
+    if (s == null || s.length() == 0) return 0;
+    int a_1 = 1, a_2 = 1, cur = 0;
+    for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) == '0') {
+            if (i > 0 && (s.charAt(i-1) == '1' || s.charAt(i-1) == '2')) cur = a_2;
+            else return 0;
+        } else if (i > 0 && ((s.charAt(i-1) == '1') ||(s.charAt(i) > '0' && s.charAt(i) < '7'&& (s.charAt(i-1) == '2')))) {
+            cur = a_1 + a_2;
+        } else cur = a_1;
+        a_2 = a_1;
+        a_1 = cur;
+    }
+    return cur;
+}

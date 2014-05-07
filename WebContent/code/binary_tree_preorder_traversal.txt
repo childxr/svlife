@@ -1,0 +1,31 @@
+/*
+Given a binary tree, return the preorder traversal of its nodes' values.
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [1,2,3].
+Note: Recursive solution is trivial, could you do it iteratively?
+*/
+
+//这道题利用栈的管理打印顺序：
+//每次从栈顶取出元素打印（初始是根节点）
+//因为右节点是后打印的，所以，应该先入栈
+//左节点是先打印的，应该后入栈
+
+public ArrayList<Integer> preorderTraversal(TreeNode root) {
+    ArrayList<Integer> ret = new ArrayList<Integer> ();
+    if (root == null) return ret;
+    Stack<TreeNode> st = new Stack<TreeNode> ();
+    st.push(root);
+    while (!st.isEmpty()) {
+        TreeNode top = st.pop();
+        ret.add(top.val);
+        if (top.right != null) st.push(top.right);
+        if (top.left != null) st.push(top.left);
+    }
+    return ret;
+}

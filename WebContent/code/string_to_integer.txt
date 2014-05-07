@@ -1,0 +1,43 @@
+/*
+Implement atoi to convert a string to an integer.
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+spoilers alert... click to show requirements for atoi.
+Requirements for atoi:
+The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
+*/
+
+//这道题实际是考(+|-)?d*
+//注意要把之前的空格全部都过掉，找到第一个有效字符
+//从第一个有效字符开始，计算连续有效字符组成的数字的值
+//如果数值越界，则返回界内边缘值
+//否则返回数值本身
+//注意检测越界，需要用值域较大的类型long
+
+public int atoi(String str) {
+    if (str == null || str.length() == 0) return 0;
+    long sum = 0;
+    int i = 0;
+    while(i < str.length() && str.charAt(i) == ' ') i++;
+    if (i == str.length() || !isValid(str.charAt(i))) return 0;
+    int sign = 1;
+    char first = str.charAt(i);
+    if (first == '-') sign *= -1;
+    if (isDigit(first)) sum += (first - '0');
+    while ((++i) < str.length() && isDigit(str.charAt(i))) {
+        sum = sum * 10 + str.charAt(i) - '0';
+    } 
+    sum *= sign;
+    if (sum > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+    if (sum < Integer.MIN_VALUE) return Integer.MIN_VALUE;
+    return (int) sum;
+}
+boolean isValid(char ch) {
+    return ((ch == '+')||(ch == '-')||(ch >= '0' && ch <= '9'));
+}
+boolean isDigit(char ch) {
+    return ch >= '0' && ch <= '9';
+}

@@ -1,0 +1,57 @@
+/*
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+For example,
+S = "ADOBECODEBANC"
+T = "ABC"
+Minimum window is "BANC".
+Note:
+If there is no such window in S that covers all characters in T, return the emtpy string "".
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+*/
+
+//这道题的基本思路很简单：首先找窗口头部，然后收缩，直到找到以当前窗口头部为界的最小窗口；之后更新窗口头部，重复之前的步骤，直到窗口头部到了最后一字符
+//关键的几个地方是，如何以上步骤转化成代码：
+//何为（有效）窗口头部？包含了指定字符串的头部
+//怎么知道找到了一个头部，可以开始收缩尾部？
+//考虑使用一个ref hashmap,包含target字符串的map code
+//然后用一个help hashmap,记录当前走过的窗口信息
+//用一个count记录当前走过窗口包含的valid字符个数，所谓的valid，即当前字符cur必须在ref里出现过，并且frequency不大于ref里的frequency
+//如果count的值和target字符串的长度一样，那么我们便找到一个窗口头部，开始准备收缩窗口
+//收缩窗口的时候，更新min窗口的值，count要做逆操作：如果窗口尾部的字符tail在ref中出现过，并且ref中的频率大于help中的频率，count要减
+//当count和expected的不一样时，收缩就能结束了。窗口头部继续往前，重复之上的步骤，直到头部到达最后字符串尾部，并且窗口尾部收缩完毕->返回最小值
+//可以检查的地方有：count更新的条件，尾部收缩的开始条件，收缩循环的退出条件和书写位置
+
+public String minWindow(String S, String T) {
+    if(S == null || T == null) return null;
+    if(S.length() == 0 || T.length() == 0 || S.length() < T.length()) return "";
+    int[] ref = new int[256];
+    int[] help = new int[256];
+    for (int i = 0; i < 256; i++) {ref[i] = 0; help[i] = 0;}
+    for (int i = 0; i < T.length(); i++) ref[T.charAt(i)] += 1;
+    int winStart = 0, winEnd = 0, count = 0, expected = T.length();
+    int minStart = -1, minEnd = 0, min = Integer.MAX_VALUE;
+    for (winStart = 0; winStart < S.length(); winStart++) {
+        char cur = S.charAt(winStart);
+        help[cur]++;
+        if (ref[cur] > 0) {
+            if (ref[cur] >= help[cur]) count++;
+            if (count == expected) { // shrink window
+                while (winEnd <= winStart) {
+                    if (count < expected) break;
+                    if (min > winStart-winEnd+1) {
+                        min = winStart-winEnd+1;
+                        minStart = winStart;
+                        minEnd = winEnd;
+                    }
+                    char tail = S.charAt(winEnd);
+                    help[tail]--;
+                    if (ref[tail] > 0) {
+                        if (ref[tail] > help[tail]) count--;
+                    }
+                    winEnd++;
+                }
+            }
+        }
+    }
+    return S.substring(minEnd, minStart+1);
+}

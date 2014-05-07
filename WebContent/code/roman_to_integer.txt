@@ -1,0 +1,27 @@
+/*
+Given a roman numeral, convert it to an integer.
+Input is guaranteed to be within the range from 1 to 3999.
+*/
+
+//这题先把罗马表存在Hash里，然后从右往左扫描字符串，如果右边的数大于左边的数，用减法，反之用加法
+//注意字符串越界，以及用减法时，迭代变量要多减1，因为此时已经处理了两个字符
+
+public int romanToInt(String s) {
+    if (s == null || s.length() == 0) return 0;
+    HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+    map.put('I', 1);
+    map.put('V', 5);
+    map.put('X', 10);
+    map.put('L', 50);
+    map.put('C', 100);
+    map.put('D', 500);
+    map.put('M', 1000);
+    int sum = 0;
+    for (int i = s.length()-1; i >= 0; i--) {
+        if (i > 0 && map.get(s.charAt(i)) > map.get(s.charAt(i-1))) {
+            sum += (map.get(s.charAt(i)) - map.get(s.charAt(i-1)));
+            i--;
+        } else sum += map.get(s.charAt(i));
+    }
+    return sum;
+}

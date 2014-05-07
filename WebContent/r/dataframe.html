@@ -1,0 +1,59 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+	<head>
+		<title>HTML Online Editor Sample</title>
+	</head>
+	<body>
+		<table align="center" border="0" cellpadding="1" cellspacing="1" style="width: 1000px;">
+			<tbody>
+				<tr>
+					<td>
+						<h1>
+							Data Frames</h1>
+						<p>
+							Data frames 用来存储tabular的数据，它是一种特殊的list，这种list的每一个元素的长度都是相同的。而每一个元素都可以想成是一个column，而这个column里元素的长度，则是row的行数。和matrix不同的是，data frame这个list可以存储不同类型的元素，也就是说，每个column的类型都可以相互不一样。Data frames有自己的特殊属性，交row.names，靠这个属性，可以取得行的名字。一个data frame通常用read.table()或者read.csv()来建立，它可以通过data.matrix()转换为matrix。</p>
+						<p>
+							显性建立data frame可以通过如下的构造函数，将列连接。</p>
+						<div>
+							&gt; x &lt;- <strong>data.frame</strong>(foo=1:4, bar=c(T,T,F,F))</div>
+						<div>
+							&gt; x</div>
+						<div>
+							&nbsp; foo &nbsp; bar</div>
+						<div>
+							1 &nbsp; 1 &nbsp;TRUE</div>
+						<div>
+							2 &nbsp; 2 &nbsp;TRUE</div>
+						<div>
+							3 &nbsp; 3 FALSE</div>
+						<div>
+							4 &nbsp; 4 FALSE</div>
+						<div>
+							&gt;<strong> nrow</strong>(x)</div>
+						<div>
+							[1] 4</div>
+						<div>
+							&gt; <strong>ncol</strong>(x)</div>
+						<div>
+							[1] 2</div>
+						<div>
+							<div>
+								&gt; <strong>dimnames</strong>(x)</div>
+							<div>
+								[[1]]</div>
+							<div>
+								[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;</div>
+							<div>
+								&nbsp;</div>
+							<div>
+								[[2]]</div>
+							<div>
+								[1] &quot;foo&quot; &quot;bar&quot;</div>
+							<div>
+								&nbsp;</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table></body>
+</html>

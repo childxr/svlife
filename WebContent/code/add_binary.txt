@@ -1,0 +1,60 @@
+/*
+Given two binary strings, return their sum (also a binary string).
+For example,
+a = "11"
+b = "1"
+Return "100".
+*/
+
+//这道题也是归并排序的变形
+//第一种方法是字符串对应位依次相加，最后将结果reverse一下
+//第二种方法是开一个缓存空间，然后将对应位相加，放入相应的位置中
+//返回时注意对“0”+“0”这种情况的处理
+
+public String addBinary(String a, String b) {
+    if(a == null || b == null) return a == null?b:a;
+    if(a.length() == 0 || b.length() == 0) return a.length() == 0?b:a;
+    int i = a.length()-1, j = b.length()-1, c = 0, s = 0;
+    StringBuffer bf = new StringBuffer();
+    while(i >= 0 || j >= 0 || c > 0) {
+        if(i >= 0 && j >= 0) {
+            s = (a.charAt(i--) - '0') + (b.charAt(j--) - '0') + c;
+        } else if(i < 0 && j >= 0) {
+            s = (b.charAt(j--) - '0') + c;
+        } else if(j < 0 && i >= 0) {
+            s = (a.charAt(i--) - '0') + c;
+        } else {
+            s = c;
+        }
+        bf.append(s%2);
+        c = s/2;
+    }
+    return bf.reverse().toString();
+}
+
+public String addBinary(String a, String b) {
+    if (a == null || b == null) return "";
+    if (a.length() == 0 || b.length() == 0) return a.length() == 0 ? b:a;
+    int lenA = a.length(), lenB = b.length();
+    StringBuffer bf = new StringBuffer((lenA > lenB ? a:b)+" ");
+    int i = lenA - 1, j = lenB - 1, k = bf.length()-1;
+    for(int t = 0; t <= k; t++) bf.setCharAt(t, '0');
+    while (i >= 0 || j >= 0) {
+        int sum = 0;
+        if(i >= 0 && j >= 0) {
+            sum = (bf.charAt(k--) - '0') + (a.charAt(i--) - '0') + (b.charAt(j--) - '0');
+        } else if (i >= 0) {
+            sum = (bf.charAt(k--) - '0') + (a.charAt(i--) - '0');
+        } else {
+            sum = (bf.charAt(k--) - '0') + (b.charAt(j--) - '0');
+        }
+        int r = sum%2 + '0';
+        int c = sum/2 + '0';
+        bf.setCharAt(k+1, (char)r);
+        bf.setCharAt(k, (char)c);
+    }
+    int t = 0;
+    while(t < bf.length() && bf.charAt(t) == '0') t++;
+    if (t == bf.length()) return "0";
+    return bf.substring(t);
+}

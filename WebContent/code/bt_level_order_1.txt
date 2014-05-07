@@ -1,0 +1,43 @@
+/*
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+For example:
+Given binary tree {3,9,20,#,#,15,7},
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+*/
+
+//这道题主要是用两个链表实现队列
+//一个用于顺序的输出当前层
+//一个用于存储下一层节点的信息，为下一个循环做准备
+//当用于存储下一层节点的链表为空时，则说明树已经遍历完毕
+//这道题有树和图的思想在里面
+public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+    ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>> ();
+    if (root == null) return ret;
+    LinkedList<TreeNode> last = new LinkedList<TreeNode> ();
+    LinkedList<TreeNode> cur = new LinkedList<TreeNode> ();
+    last.add(root);
+    while (!last.isEmpty()) {
+        ArrayList<Integer> tmp = new ArrayList<Integer> ();
+        while (!last.isEmpty()) {
+            TreeNode n = last.remove();
+            tmp.add(n.val);
+            if (n.left != null) cur.add(n.left);
+            if (n.right != null) cur.add(n.right);
+        }
+        ret.add(tmp);
+        LinkedList<TreeNode> t = last;
+        last = cur;
+        cur = t;
+    }
+    return ret;
+}
